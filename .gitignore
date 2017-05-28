@@ -1,0 +1,7 @@
+*.iml
+.idea
+.gitignore
+out/artifacts/maven_ssh_war/WEB-INF/classes/com/maven/
+out/artifacts/maven_ssh_war/views/
+src/test/
+target/generated-sources/
