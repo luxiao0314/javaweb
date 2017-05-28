@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>--%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%--<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %> 使用这个会提示报错--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <html>
 <head>
     <title>员工列表</title>
@@ -80,26 +80,38 @@
     <div class="row">
         <%--分页文字信息--%>
         <div class="col-md-6">
-            当前记录数
+            当前${pageInfo.pageNum}页,总${pageInfo.pages}页,总${pageInfo.total} 条记录
         </div>
         <%--分页条--%>
         <div class="col-md-6">
             <nav aria-label="...">
                 <ul class="pagination">
-                    <li><a href="#">首页</a></li>
-                    <li class="disabled">
-                        <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="disabled">
-                        <a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                    <li><a href="#">尾页</a></li>
+                    <%--如果有上一页就显示上一页--%>
+                    <li><a href="${APP_PATH}/emps?pn=1">首页</a></li>
+                    <c:if test="${pageInfo.hasPreviousPage}">
+                        <li class="disabled">
+                            <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum-1}" aria-label="Previous"><span
+                                    aria-hidden="true">&laquo;</span></a>
+                        </li>
+                    </c:if>
+                    <c:forEach items="${pageInfo.navigatepageNums}" var="page_num">
+                        <%--如果页码是当前页就高亮--%>
+                        <c:if test="${page_num == pageInfo.pageNum}">
+                            <li class="active"><a href="#">${page_num}</a></li>
+                        </c:if>
+                        <%--如果不是就正常显示--%>
+                        <c:if test="${page_num!=pageInfo.pageNum}">
+                            <li><a href="${APP_PATH}/emps?pn=${page_num} ">${page_num}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${pageInfo.hasNextPage}">
+                        <li class="disabled">
+                            <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum+1}" aria-label="Next"><span
+                                    aria-hidden="true">&raquo;</span></a>
+                        </li>
+                    </c:if>
+                    <%--href 为超链接 做页面跳转使用这个--%>
+                    <li><a href="${APP_PATH}/emps?pn=${pageInfo.pages}">尾页</a></li>
                 </ul>
             </nav>
         </div>
