@@ -7,6 +7,7 @@
     <!--1,spring的配置-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
+        <!--之前是/appContext.xml  导致文件一直找不到报错,心好累-->
         <param-value>classpath:appContext.xml</param-value>
     </context-param>
     <listener>
