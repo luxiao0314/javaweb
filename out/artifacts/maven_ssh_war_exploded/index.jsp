@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>$Title$</title>
-    <%
+    <%--<%
         request.setAttribute("APP_PATH", request.getContextPath());
     %>
     <!-- web路径：
@@ -24,13 +24,13 @@
             href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
             rel="stylesheet">
     <script
-            src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+            src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>--%>
 </head>
 <body>
-<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+<%--<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 <button type="button" class="btn btn-primary">（首选项）Primary</button>
 
 <!-- Indicates a successful or positive action -->
-<button type="button" class="btn btn-success">（成功）Success</button>
+<button type="button" class="btn btn-success">（成功）Success</button>--%>
 </body>
 </html>
