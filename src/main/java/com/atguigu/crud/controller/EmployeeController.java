@@ -10,12 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,5 +104,57 @@ public class EmployeeController {
         } else {
             return Msg.fail().add("va_msg", "用户名不可用");
         }
+    }
+
+    /**
+     * 根据id查询员工
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/emp/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getEmp(@PathVariable("id") Integer id) {
+        Employee employee = employeeService.getEmp(id);
+        return Msg.success().add("emp", employee);
+    }
+
+    /**
+     * 根据id更新员工数据
+     * @param employee
+     * @return
+     */
+    @RequestMapping(value = "/emp/{empId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Msg updateMsg(Employee employee) {
+        employeeService.updateEmp(employee);
+        return Msg.success();
+    }
+
+    /**
+     * 单个批量二合一
+     * 批量删除：1-2-3
+     * 单个删除：1
+     *
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "emp/{ids}",method = RequestMethod.DELETE)
+    public Msg deleteEmp(@PathVariable("ids")String ids){
+        //批量删除
+        if(ids.contains("-")){
+            List<Integer> del_ids = new ArrayList<Integer>();
+            String[] str_ids = ids.split("-");
+            //组装id的集合
+            for (String string : str_ids) {
+                del_ids.add(Integer.parseInt(string));
+            }
+            employeeService.deleteBatch(del_ids);
+        }else{
+            Integer id = Integer.parseInt(ids);
+            employeeService.deleteEmp(id);
+        }
+        return Msg.success();
     }
 }
